@@ -1,6 +1,7 @@
 ---
 layout: post
 title: Narrowing gets funny
+summary: Conversion from floating integer values is error-prone
 ---
 
 Write accurate calculation code requires to know about the border line case.
