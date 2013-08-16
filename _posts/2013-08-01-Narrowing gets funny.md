@@ -2,6 +2,7 @@
 layout: post
 title: Narrowing gets funny
 ---
+
 Write accurate calculation code requires to know about the border line case.
 The following code
 {% highlight java %}
@@ -24,7 +25,6 @@ Output:
 {% highlight java %}
 0
 {% endhighlight %}
-
 
 Outch. The [Java specification]({% "http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.3 %}) 
 reveals that the float is converted to an int, and clamped to the negative value of largest magnitude: `0x80000000`. 
