@@ -1,18 +1,15 @@
 ---
 layout: post
 title: Narrowing gets funny
-summary: Conversion from floating integer values is error-prone
+excerpt: Conversion from floating integer values is error-prone
 ---
 
 Write accurate calculation code requires to know about the border line case.
-The following code
+What happens when casting a `Float` into an integer, when the value overflows:
 {% highlight java %}
 int intValue = (int) Float.NEGATIVE_INFINITY;
 System.out.println(intValue);
-{% endhighlight %}
-prints something like this:
-{% highlight java %}
--2147483648
+// => -2147483648
 {% endhighlight %}
 
 The conversion to integers returns the lowest value of the primitive type. Narrowing from float to long works the same. 
@@ -20,11 +17,8 @@ Up to now, everything's ok. What about smaller primitive type such as byte, char
 
 {% highlight java %}
 short shortValue = (short) Float.NEGATIVE_INFINITY;
-System.out.println(shortValue);</code>
-{% endhighlight %}
-Output:
-{% highlight java %}
-0
+System.out.println(shortValue);
+// => 0
 {% endhighlight %}
 
 Outch. The [Java specification](http://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.1.3) 
