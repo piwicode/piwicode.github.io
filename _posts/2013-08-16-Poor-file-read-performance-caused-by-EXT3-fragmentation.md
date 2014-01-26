@@ -14,8 +14,7 @@ $ fdisk -l
 #=> sda, sdb, sdc, sdd
 {% endhighlight %}
  
-Bench disk read speed through the Linux cache. This command clears the cache during the test
-to ensure the accurate measurement of the hardware speed. 
+The first issue to address is whether the perofmrance issue is caused by defective hardware. First let's measure the read speed through the Linux cache. This command bypass the filesystem API and is a good indicator of hardware and driver speed. The cache is cleared during the test to ensure accurate measurement.
  
 {% highlight bash %}
 $ hdparm -t /dev/sda
@@ -24,7 +23,7 @@ $ hdparm -t /dev/sda
 {% endhighlight %}
  
 The average measured preformance of the disks is `85.4 Mo/s`, `89.2 Mo/s`, `120.8 Mo/s`, `122.5 Mo/s`.
-These perfs looks good, the standard deviation for each individual hdd is low, and the difference between the drives is due 
+These values looks correct, the standard deviation for each individual hdd is low, and the difference between the drives is due 
 to different hardware. Given the raw disk read is fast, the bottleneck is not the hardware.
  
 Let's try to read a complete file through the file system API. 
@@ -62,7 +61,7 @@ $ debugfs /dev/md2 -C "stat /public/big"
 I processed the output with a python program and detected 28352 contiguous bloc segment. Wow, 
 I picked that file randomly, I guess the whole drive is scrambled that way. 
  
-Last but not least here is a command to check the fragmentation level of all files over 100 Mo. I installed ipkg & filefrag to help. 
+Last but not least, here is a command to check the fragmentation level of all files over 100 Mo. I installed `ipkg` & `filefrag` to help. 
  
 {% highlight bash %}
 $  find /volume1 /volume2  ! \( -name @* -prune \) -type f -size +100000 -exec filefrag -B {}  \; | tee fragreport

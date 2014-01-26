@@ -4,8 +4,9 @@ title: Narrowing gets funny
 excerpt: Conversion from floating integer values is error-prone
 ---
 
-Write accurate calculation code requires to know about the border line case.
-What happens when casting a `Float` into an integer, when the value overflows:
+Write accurate calculation code requires to know about the border-line cases.
+What happens when casting a `float` into an `int`, when the value overflows ?
+
 {% highlight java %}
 int intValue = (int) Float.NEGATIVE_INFINITY;
 System.out.println(intValue);
@@ -13,7 +14,7 @@ System.out.println(intValue);
 {% endhighlight %}
 
 The conversion to integers returns the lowest value of the primitive type. Narrowing from float to long works the same. 
-Up to now, everything's ok. What about smaller primitive type such as byte, char and short ?
+There is nothing surprising about this, but what about smaller primitive type such as byte, char and short ?
 
 {% highlight java %}
 short shortValue = (short) Float.NEGATIVE_INFINITY;
@@ -25,9 +26,18 @@ Outch. The [Java specification](http://docs.oracle.com/javase/specs/jls/se7/html
 reveals that the float is converted to an int, and clamped to the negative value of largest magnitude: `0x80000000`. 
 Then the 32 bit binary representation is truncated to a 16 bit short: `0x0000`.
 
-It is possible compute the largest float value that is converted without causing overflow:
+It is possible compute the float range that is converted without causing overflow:
 {% highlight java %}
-Float.intBitsToFloat(Float.floatToIntBits(0x8000)-1);
+Float.intBitsToFloat(Float.floatToIntBits(Short.MAX_VALUE+1)-1);
+// => 32767.998
+Float.intBitsToFloat(Float.floatToIntBits(Short.MIX_VALUE-1)-1);
+// => -32768.996
 {% endhighlight %}
 
-Let it be said that developers never finish learning.
+The trick consists in selecting the first integer that cause an overflow by explicitly going over the `short` range boundaries. This is what `Short.MAX_VALUE+1` achieves.
+
+Then the integer value is converted to float. This is an exact conversion given that float has a 23 bits mantissa. This float value is the smallest one that causes an overflow.
+
+Finally the next float value toward zero is selected. As a consequence the rounding toward zero will match the right boundary of short value interval.
+
+Everyday is a school day.
