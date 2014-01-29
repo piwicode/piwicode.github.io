@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Narrowing gets funny
-excerpt: Conversion from floating integer values is error-prone
+excerpt: Conversion from floating point to integer is error-prone
 ---
 
 Write accurate calculation code requires to know about the border-line cases.

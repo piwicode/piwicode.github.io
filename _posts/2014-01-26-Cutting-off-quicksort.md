@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Cutting off quick-sort
-excerpt: Quick-sort is fast in practice but can be beaten by insertion sort on small dataset. We can reap the best of the both.
+excerpt: Quick-sort is fast in practice but can be beaten by insertion sort on small datasets. We can design a sort to reap the best of the both.
 ---
  
-The quick-sort algorithm has been developed by Tony Hoare in 1960, with expected `O(n log n)` comparisons and `O(log n)` memory space to sort `n` items. The quick-sort is outperform the others in practice, but there is no guarantee. When it spins off the road the complexity becomes quadratic. It is a classic recipe with many variants. Indeed writing a robust implementation that avoids quadratic response time reveals challenging, but that's another story. Here is a naive quick-sort implementation.
+The quick-sort algorithm has been developed by Tony Hoare in 1960, with expected `O(n log n)` comparisons and `O(log n)` memory space to sort `n` items. The quick-sort outperform the others in practice, but there is no guarantee. When it spins off the road the complexity becomes quadratic. It is a classic recipe with many variants. Indeed writing a robust implementation that avoids quadratic response time reveals challenging, but that's another story. Here is a naive quick-sort implementation.
 
 {% highlight java %}
     /**
