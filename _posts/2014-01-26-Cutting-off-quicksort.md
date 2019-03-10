@@ -1,10 +1,10 @@
 ---
 layout: post
 title: Cutting off quick-sort
-excerpt: Quick-sort is fast in practice but is beaten by insertion sort on small datasets. From this observation, we can design an hybrid algorythm to reap the best of both.
+excerpt: Quick-sort is fast in practice but is beaten by insertion sort on small datasets. From this observation, we can design an hybrid algorithm to reap the best of both.
 ---
- 
-The quick-sort algorithm has been developed by Tony Hoare in 1960, with expected `O(n log n)` comparisons and `O(log n)` memory space to sort `n` items. The quick-sort outperform the others in practice, but there is no guarantee. When it spins off the road the complexity becomes quadratic. It is a classic recipe with many variants. Indeed writing a robust implementation that avoids quadratic response time reveals challenging, but that's another story. Here is a naive quick-sort implementation.
+
+The quick-sort algorithm has been developed by Tony Hoare in 1960, with expected `O(n log n)` comparisons and `O(log n)` memory space to sort `n` items. The quick-sort outperforms others algorithms in practice, but it has no guarantee: when it spins off the road the complexity becomes quadratic. Like every classic recipe, quick-sort has many variants. Indeed writing a robust implementation that avoids quadratic response time reveals challenging, but that's another story. Here is a naive quick-sort implementation:
 
 {% highlight java %}
     /**
@@ -47,13 +47,13 @@ The insertion sort is a quadratic sorting algorithms. Despite of its poor asympt
     }
 {% endhighlight %}
 
-Insertion sort is faster on arrays smaller that 300 elements. 
+Insertion sort is faster on arrays smaller that 300 elements.
 <img src="/static/images/complexity_of_qs_and_is.png"/>
 
-The quick-sort spends a lot a time sorting small arrays, and it would be faster to use insertion sort to finish the work. 
+The quick-sort spends a lot a time sorting small arrays, and it would be faster to use insertion sort to finish the work.
 We can reap the best of the both, using quick-sort for the rough-in phase, and switch to the insertion when the arrays is small.
 
-Bob Sedgewick developed an implementation of this idea. When quick-sort is called on a small arrays, we do nothing. When the quick-sort returns 
+Bob Sedgewick developed an implementation of this idea. When quick-sort is called on a small arrays, we do nothing. When the quick-sort returns
 the array is almost sorted and a single insertion sort pass on the whole array finishes the job. We implement it by replacing the quick-sort end condition by:
 
 {% highlight java %}
@@ -74,9 +74,8 @@ Footnotes on sorting performances:
  - The median of three random element is a a robust quick-sort pivot selection method.
  - Three-way partitioning avoids quadratic time induces by repeated values.
  - Least significant radix sort combined with counting sort outperforms quick-sort for integers.
- 
-Footnote regarding experimental data:
- - Measures are performed on a Java Hotspot, started in server mode. 
- - The elapsed time is the average of 400 samples measured after the warm-up phase. 
- - The benchmark harness and implementations is available at [https://github.com/piwicode/algorithms](https://github.com/piwicode/algorithms).
 
+Footnote regarding experimental data:
+ - Measures are performed on a Java Hotspot, started in server mode.
+ - The elapsed time is the average of 400 samples measured after the warm-up phase.
+ - The benchmark harness and implementations is available at [https://github.com/piwicode/algorithms](https://github.com/piwicode/algorithms).
